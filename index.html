@@ -4,324 +4,375 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Umma Reminder</title>
-
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --green:#145b43;
+  --deep:#0d392c;
+  --cream:#faf8f0;
+  --gold:#c6a45b;
+  --text:#263b32;
 }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #f8f6ef;
-  color: #243b32;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Georgia,serif;
+  background:var(--cream);
+  color:var(--text);
+  line-height:1.7;
 }
-
-header {
-  background: #123c30;
-  color: white;
-  padding: 25px 7%;
+header{
+  background:var(--deep);
+  color:white;
+  text-align:center;
+  padding:38px 18px;
 }
-
-.brand {
-  font-size: 25px;
-  font-weight: bold;
+header h1{font-size:32px;margin:0}
+header p{color:#e5d9b9;margin:5px 0}
+nav{
+  background:var(--green);
+  padding:12px;
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
 }
-
-header p {
-  color: #d7e4da;
-  margin-top: 7px;
-  font-size: 14px;
+nav a{
+  color:white;
+  text-decoration:none;
+  font-size:13px;
+  padding:5px;
 }
-
-nav {
-  background: #ffffff;
-  padding: 17px 7%;
-  display: flex;
-  gap: 22px;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #e7e4d9;
+main{max-width:950px;margin:auto;padding:25px 17px}
+h2{color:var(--green)}
+.intro{text-align:center;padding:20px 5px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
 }
-
-nav a {
-  color: #315747;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
+.card{
+  background:white;
+  border:1px solid #e8e2d2;
+  border-radius:13px;
+  padding:20px;
+  box-shadow:0 3px 12px #00000008;
 }
-
-.hero {
-  margin: 30px auto;
-  width: 86%;
-  background: #164b3a;
-  color: white;
-  padding: 40px 25px;
-  border-radius: 18px;
-  text-align: center;
+.card h3{color:var(--green);margin-top:0}
+.card p{font-size:14px}
+button{
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-size:14px;
 }
-
-.hero h1 {
-  font-size: 30px;
-  margin-bottom: 15px;
+button:hover{background:var(--deep)}
+.story-button{
+  width:100%;
+  text-align:left;
+  background:white;
+  color:var(--text);
+  border:1px solid #e8e2d2;
+  margin:5px 0;
+  padding:13px;
 }
-
-.hero p {
-  color: #e1ede5;
-  line-height: 1.7;
+.story-button:hover{background:#edf3ed;color:var(--green)}
+.story-page{
+  background:white;
+  border-radius:14px;
+  padding:25px;
+  border:1px solid #e8e2d2;
 }
-
-.hero button {
-  margin-top: 22px;
-  padding: 13px 25px;
-  background: #e4c58c;
-  border: none;
-  border-radius: 8px;
-  color: #173c30;
-  font-weight: bold;
-  cursor: pointer;
+.story-page h2{font-size:25px}
+.hidden{display:none}
+.back{margin-bottom:20px}
+.small{font-size:13px;color:#777}
+footer{
+  background:var(--deep);
+  color:#eee;
+  text-align:center;
+  padding:25px;
+  margin-top:40px;
 }
-
-.container {
-  width: 86%;
-  margin: 35px auto;
-}
-
-.container h2 {
-  margin-bottom: 20px;
-  font-size: 23px;
-}
-
-.search {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid #deded3;
-  border-radius: 10px;
-  margin-bottom: 25px;
-  font-size: 15px;
-  background: white;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-}
-
-.card {
-  background: white;
-  padding: 24px;
-  border-radius: 14px;
-  border: 1px solid #ece9df;
-  text-decoration: none;
-  color: #243b32;
-  transition: 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  border-color: #bba36f;
-}
-
-.card .symbol {
-  font-size: 30px;
-  margin-bottom: 15px;
-}
-
-.card h3 {
-  margin-bottom: 10px;
-  color: #174735;
-}
-
-.card p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #737b73;
-}
-
-.section {
-  margin-top: 45px;
-}
-
-.note {
-  background: #eee9d9;
-  padding: 25px;
-  border-radius: 14px;
-  line-height: 1.8;
-}
-
-footer {
-  margin-top: 60px;
-  background: #123c30;
-  color: white;
-  text-align: center;
-  padding: 30px;
-  font-size: 13px;
-}
-
-@media(max-width:600px) {
-  .hero h1 {
-    font-size: 25px;
-  }
-  nav {
-    gap: 15px;
-  }
-}
+a{color:var(--green)}
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="brand">🌙 Umma Reminder</div>
-  <p>Your companion for Islamic reminders and knowledge.</p>
+<h1>Umma Reminder</h1>
+<p>Learn. Reflect. Remember Allah.</p>
 </header>
 
 <nav>
-  <a href="#home">Home</a>
-  <a href="#quran">Quran</a>
-  <a href="#hadith">Hadith</a>
-  <a href="#duas">Duas</a>
-  <a href="#learning">Learning</a>
-  <a href="#videos">Videos</a>
+<a href="#home">Home</a>
+<a href="#quran">Quran</a>
+<a href="#hadith">Hadith</a>
+<a href="#stories">Prophets</a>
+<a href="#duas">Duas</a>
+<a href="#learning">Learning</a>
+<a href="#videos">Videos</a>
+<a href="#reminders">Reminders</a>
 </nav>
 
-<section class="hero" id="home">
-  <h1>Assalamu Alaikum</h1>
-  <p>
-    Welcome to Umma Reminder.<br>
-    A place to learn, reflect, remember Allah
-    and grow in your Islamic knowledge.
-  </p>
-  <button onclick="document.getElementById('library').scrollIntoView({behavior:'smooth'})">
-    Explore the Library
-  </button>
+<main id="home">
+<section class="intro">
+<h2>Welcome to Umma Reminder</h2>
+<p>A peaceful place to learn about Islam, read beneficial knowledge and strengthen our relationship with Allah.</p>
 </section>
 
-<div class="container" id="library">
-
-  <h2>Explore Your Islamic Library</h2>
-
-  <input
-    class="search"
-    type="text"
-    id="search"
-    placeholder="Search your Islamic library..."
-    oninput="searchCards()"
-  >
-
-  <div class="grid" id="libraryCards">
-
-    <a class="card" href="#quran">
-      <div class="symbol">📖</div>
-      <h3>Al-Quran</h3>
-      <p>Explore Quranic chapters, translations and explanations.</p>
-    </a>
-
-    <a class="card" href="#hadith">
-      <div class="symbol">📚</div>
-      <h3>Hadith</h3>
-      <p>Learn from authentic narrations of Prophet Muhammad ﷺ.</p>
-    </a>
-
-    <a class="card" href="#duas">
-      <div class="symbol">🤲</div>
-      <h3>Duas & Adhkar</h3>
-      <p>Discover daily supplications and remembrance of Allah.</p>
-    </a>
-
-    <a class="card" href="#learning">
-      <div class="symbol">🕌</div>
-      <h3>Islamic Learning</h3>
-      <p>Explore Islamic beliefs, worship, manners and knowledge.</p>
-    </a>
-
-    <a class="card" href="#videos">
-      <div class="symbol">🎥</div>
-      <h3>Video Library</h3>
-      <p>Learn through Islamic lectures and educational videos.</p>
-    </a>
-
-    <a class="card" href="#reminders">
-      <div class="symbol">🌿</div>
-      <h3>Daily Reminders</h3>
-      <p>Find reminders that encourage reflection and good deeds.</p>
-    </a>
-
-  </div>
-
-  <div class="section" id="quran">
-    <h2>📖 Quran Corner</h2>
-    <div class="note">
-      A dedicated space for Quran reading, Arabic text,
-      translations and Tafsir.
-      <p>Our Quran library is coming soon, inshaAllah.</p>
-    </div>
-  </div>
-
-  <div class="section" id="hadith">
-    <h2>📚 Hadith Collection</h2>
-    <div class="note">
-      A space for authentic Hadith, their sources,
-      explanations and lessons.
-      <p>Our Hadith collection is coming soon, inshaAllah.</p>
-    </div>
-  </div>
-
-  <div class="section" id="duas">
-    <h2>🤲 Duas & Adhkar</h2>
-    <div class="note">
-      A library for morning and evening adhkar,
-      daily duas and supplications from the Quran and Sunnah.
-      <p>Our Dua collection is coming soon, inshaAllah.</p>
-    </div>
-  </div>
-
-  <div class="section" id="learning">
-    <h2>🕌 Islamic Learning</h2>
-    <div class="note">
-      Learn about Salah, fasting, purification,
-      Islamic character and other important subjects.
-      <p>Our learning library is coming soon, inshaAllah.</p>
-    </div>
-  </div>
-
-  <div class="section" id="videos">
-    <h2>🎥 Islamic Video Library</h2>
-    <div class="note">
-      A place for beneficial Islamic lectures,
-      lessons and educational videos.
-      <p>Our video library is coming soon, inshaAllah.</p>
-    </div>
-  </div>
-
-  <div class="section" id="reminders">
-    <h2>🌿 A Gentle Reminder</h2>
-    <div class="note">
-      Make learning about your Deen a beautiful part
-      of your everyday life. Take one step at a time.
-    </div>
-  </div>
-
+<h2>Explore Our Library</h2>
+<div class="grid">
+<div class="card" id="quran">
+<h3>📖 The Holy Quran</h3>
+<p>Read the words of Allah and explore their meanings.</p>
+<a href="#quran">Explore Quran</a>
 </div>
 
+<div class="card" id="hadith">
+<h3>📜 Hadith</h3>
+<p>Learn from the authentic teachings of Prophet Muhammad ﷺ.</p>
+<a href="#hadith">Explore Hadith</a>
+</div>
+
+<div class="card">
+<h3>🌿 Stories of the 25 Prophets</h3>
+<p>Discover the stories of Allah's Prophets in simple, easy-to-understand language.</p>
+<a href="#stories">Explore the stories</a>
+</div>
+
+<div class="card" id="duas">
+<h3>🤲 Duas and Adhkar</h3>
+<p>Discover supplications and remembrance of Allah for everyday life.</p>
+<a href="#duas">Explore Duas</a>
+</div>
+
+<div class="card" id="learning">
+<h3>🎓 Islamic Learning</h3>
+<p>Learn the foundations of Islam, step by step.</p>
+<a href="#learning">Start learning</a>
+</div>
+
+<div class="card" id="videos">
+<h3>🎧 Video and Audio Library</h3>
+<p>Watch and listen to beneficial Islamic content.</p>
+<a href="#videos">Explore media</a>
+</div>
+
+<div class="card" id="reminders">
+<h3>🌙 Daily Reminders</h3>
+<p>Short reminders to help you remember Allah throughout your day.</p>
+<a href="#reminders">Read reminders</a>
+</div>
+</div>
+
+<section id="stories" style="margin-top:45px">
+<h2>Stories of the 25 Prophets</h2>
+<p>Every Prophet had a message and a lesson for humanity. Choose a name below to begin reading.</p>
+
+<div id="prophet-list" class="grid"></div>
+
+<div id="story-detail" class="story-page hidden" style="margin-top:20px">
+<button class="back" onclick="showProphets()">← Back to all Prophets</button>
+<div id="story-content"></div>
+</div>
+</section>
+</main>
+
 <footer>
-  <h3>Umma Reminder 🌙</h3>
-  <p>Seeking knowledge. Remembering Allah. Growing in faith.</p>
-  <p style="margin-top:12px">May Allah guide us all. Ameen.</p>
+<strong>Umma Reminder</strong>
+<p>May Allah make this a source of beneficial knowledge.</p>
+<p class="small">Built with the hope of spreading goodness.</p>
 </footer>
 
 <script>
-function searchCards() {
-  const query = document.getElementById("search").value.toLowerCase();
-  const cards = document.querySelectorAll("#libraryCards .card");
+const prophets = [
+{
+name:"Adam (AS)",
+text:"Allah created Adam, the first human being. Allah taught him and gave him knowledge. Allah also created his wife. They lived in the Garden, but after they disobeyed Allah's instruction, they turned to Him in repentance. Allah accepted their repentance and guided them.",
+refs:"Quran 2:30–39; 7:19–27; 20:115–123",
+lesson:"We should obey Allah, admit our mistakes and always turn back to Him."
+},
+{
+name:"Idris (AS)",
+text:"Allah mentions Idris as a truthful Prophet. The Quran tells us that Allah raised him to a high position, but does not give us a detailed account of his life.",
+refs:"Quran 19:56–57; 21:85",
+lesson:"Truthfulness and patience are important qualities."
+},
+{
+name:"Nuh (AS)",
+text:"Nuh called his people to worship Allah alone. Many people rejected his message. Allah instructed him to build an Ark. When the flood came, Allah saved Nuh and those who believed with him.",
+refs:"Quran 11:25–49; 71:1–28; 23:23–30",
+lesson:"Remain patient when calling people towards goodness and trust Allah."
+},
+{
+name:"Hud (AS)",
+text:"Hud was sent to the people of Aad. He called them to worship Allah alone and leave their pride and wrongdoing. They rejected him, and Allah punished those who refused to believe.",
+refs:"Quran 7:65–72; 11:50–60",
+lesson:"Pride should never make us reject the truth."
+},
+{
+name:"Salih (AS)",
+text:"Salih was sent to the people of Thamud. He called them to worship Allah. Allah gave them the she-camel as a sign, but they disobeyed and harmed it. They were warned of the consequences.",
+refs:"Quran 7:73–79; 11:61–68",
+lesson:"We should respect Allah's signs and obey His commands."
+},
+{
+name:"Ibrahim (AS)",
+text:"Ibrahim called his people away from idol worship. He stood firmly for the truth, even when his people opposed him. Allah tested him in many ways and made him an example of faith and obedience.",
+refs:"Quran 2:124–132; 6:74–83; 21:51–70",
+lesson:"Put your trust in Allah, even when doing the right thing is difficult."
+},
+{
+name:"Lut (AS)",
+text:"Lut was sent to a people who practised serious wrongdoing. He called them to obey Allah and leave their sinful behaviour. His people rejected his warning, and Allah saved Lut and his believing family.",
+refs:"Quran 7:80–84; 11:77–83",
+lesson:"Stand for what is right, even when others disagree."
+},
+{
+name:"Ismail (AS)",
+text:"Ismail was the son of Ibrahim. The Quran praises him for keeping his promises and encouraging his family to pray and give charity. He and Ibrahim helped raise the foundations of the Ka'bah.",
+refs:"Quran 2:125–129; 19:54–55; 37:100–107",
+lesson:"Keep your promises and obey Allah."
+},
+{
+name:"Ishaq (AS)",
+text:"Ishaq was a son of Ibrahim. Allah gave Ibrahim and his wife the good news of his birth. Ishaq was a righteous Prophet and part of a blessed family.",
+refs:"Quran 11:69–73; 37:112–113",
+lesson:"Allah's blessings can come in ways we do not expect."
+},
+{
+name:"Yaqub (AS)",
+text:"Yaqub was the son of Ishaq and the father of Yusuf. He experienced great sadness when Yusuf was separated from him, but he continued to trust Allah and remained patient.",
+refs:"Quran 12:4–18; 12:83–87",
+lesson:"Never lose hope in Allah's mercy."
+},
+{
+name:"Yusuf (AS)",
+text:"Yusuf experienced jealousy from his brothers and was separated from his father. He faced many difficult situations, including imprisonment. Allah later gave him an important position in Egypt. Yusuf forgave his brothers.",
+refs:"Quran, Surah Yusuf (12:1–111)",
+lesson:"Be patient, remain honest and forgive others when you can."
+},
+{
+name:"Ayyub (AS)",
+text:"Ayyub experienced great hardship. He turned to Allah in prayer and remained patient. Allah answered him and restored blessings to him.",
+refs:"Quran 21:83–84; 38:41–44",
+lesson:"Be patient during hardship and keep calling upon Allah."
+},
+{
+name:"Shu'ayb (AS)",
+text:"Shu'ayb was sent to the people of Madyan. He called them to worship Allah, give people their full measure and weight, and stop cheating in business.",
+refs:"Quran 7:85–93; 11:84–95",
+lesson:"Be honest and fair in all your dealings."
+},
+{
+name:"Musa (AS)",
+text:"Musa was sent to Pharaoh to call him to worship Allah and free the Children of Israel from oppression. Allah gave Musa signs and supported him. Allah later saved Musa and his people from Pharaoh.",
+refs:"Quran 20:9–79; 26:10–68; 28:3–43",
+lesson:"Be courageous and trust Allah when facing injustice."
+},
+{
+name:"Harun (AS)",
+text:"Harun was the brother of Musa. Musa asked Allah to appoint Harun to help him with his mission. Harun supported Musa in calling Pharaoh and his people to Allah.",
+refs:"Quran 20:29–36; 20:42–48; 7:142",
+lesson:"Good people can support one another in doing what is right."
+},
+{
+name:"Dhul-Kifl (AS)",
+text:"Allah mentions Dhul-Kifl among the patient and righteous. The Quran gives us very little detail about his life, so we should not invent a biography for him.",
+refs:"Quran 21:85–86; 38:48",
+lesson:"Patience and righteousness are qualities worth following."
+},
+{
+name:"Dawud (AS)",
+text:"Allah gave Dawud wisdom and kingship. He was also given the Zabur. Allah taught him to judge fairly and blessed him with a beautiful voice in praising Allah.",
+refs:"Quran 2:251; 17:55; 34:10–11; 38:17–26",
+lesson:"Use your blessings responsibly and judge fairly."
+},
+{
+name:"Sulayman (AS)",
+text:"Sulayman was the son of Dawud. Allah gave him great authority and special abilities, including understanding the speech of birds. He always recognised that his blessings came from Allah.",
+refs:"Quran 27:15–44; 34:12–14; 38:30–40",
+lesson:"Be grateful to Allah for every blessing."
+},
+{
+name:"Ilyas (AS)",
+text:"Ilyas called his people to worship Allah alone and leave the worship of false gods. He reminded them to fear Allah.",
+refs:"Quran 37:123–132; 6:85",
+lesson:"Worship Allah alone and remain firm upon the truth."
+},
+{
+name:"Al-Yasa (AS)",
+text:"Al-Yasa is mentioned by Allah among the righteous Prophets. The Quran does not give a detailed account of his life.",
+refs:"Quran 6:86; 38:48",
+lesson:"Allah honours those who are righteous."
+},
+{
+name:"Yunus (AS)",
+text:"Yunus left his people and later found himself in the darkness inside a great fish. He called upon Allah, admitted his mistake and asked for mercy. Allah rescued him.",
+refs:"Quran 10:98; 21:87–88; 37:139–148",
+lesson:"When you make a mistake, turn to Allah and never despair."
+},
+{
+name:"Zakariyya (AS)",
+text:"Zakariyya was a righteous Prophet who prayed to Allah for a child, even in old age. Allah answered his prayer and gave him the good news of Yahya.",
+refs:"Quran 3:37–41; 19:2–11; 21:89–90",
+lesson:"Never stop making dua to Allah."
+},
+{
+name:"Yahya (AS)",
+text:"Yahya was the son of Zakariyya. Allah gave him wisdom while he was still young. The Quran describes him as pure, kind to his parents and righteous.",
+refs:"Quran 3:39; 19:7–15",
+lesson:"Be kind to your parents and live with purity and goodness."
+},
+{
+name:"Isa (AS)",
+text:"Isa was born miraculously to Maryam by Allah's command. Allah made him a Prophet and gave him the Injil. He performed miracles by Allah's permission and called people to worship Allah.",
+refs:"Quran 3:42–59; 5:110–120; 19:16–36",
+lesson:"Allah has power over all things. Worship Allah alone."
+},
+{
+name:"Muhammad ﷺ",
+text:"Muhammad ﷺ is the final Messenger of Allah. He was born in Makkah and received the first revelation from Allah through the Angel Jibril. He called people to worship Allah alone. He faced hardship and opposition, migrated to Madinah, and continued teaching Islam. Allah sent him as a mercy to the worlds.",
+refs:"Quran 3:144; 21:107; 33:40; 96:1–5; Surah Al-Isra 17:1",
+lesson:"Follow his example of mercy, honesty, patience and worship of Allah."
+}
+];
 
-  cards.forEach(card => {
-    card.style.display =
-      card.innerText.toLowerCase().includes(query) ? "" : "none";
-  });
+const list = document.getElementById("prophet-list");
+const detail = document.getElementById("story-detail");
+
+prophets.forEach((prophet,index)=>{
+  const button=document.createElement("button");
+  button.className="story-button";
+  button.textContent=(index+1)+". "+prophet.name+"  →";
+  button.onclick=()=>showStory(index);
+  list.appendChild(button);
+});
+
+function showStory(index){
+  const p=prophets[index];
+  list.classList.add("hidden");
+  detail.classList.remove("hidden");
+  document.getElementById("story-content").innerHTML=`
+    <h2>${p.name}</h2>
+    <p>${p.text}</p>
+    <h3>What can we learn?</h3>
+    <p>${p.lesson}</p>
+    <h3>Read in the Quran</h3>
+    <p>${p.refs}</p>
+    <p class="small">These are brief introductions based on Quranic accounts. More detailed stories should be prepared with careful reference to reliable Tafsir and authentic Hadith.</p>
+  `;
+  detail.scrollIntoView({behavior:"smooth"});
+}
+
+function showProphets(){
+  detail.classList.add("hidden");
+  list.classList.remove("hidden");
+  document.getElementById("stories").scrollIntoView({behavior:"smooth"});
 }
 </script>
-
 </body>
 </html>
