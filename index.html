@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Umma Reminder</title>
+
 <style>
 :root {
   --green:#145b43;
@@ -13,6 +14,7 @@
   --text:#263b32;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Georgia,serif;
@@ -42,6 +44,7 @@ nav a{
   font-size:13px;
   padding:5px;
 }
+nav a:hover{text-decoration:underline}
 main{max-width:950px;margin:auto;padding:25px 17px}
 h2{color:var(--green)}
 .intro{text-align:center;padding:20px 5px}
@@ -69,6 +72,17 @@ button{
   font-size:14px;
 }
 button:hover{background:var(--deep)}
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d9d2c1;
+  border-radius:8px;
+  background:white;
+  color:var(--text);
+  font-size:15px;
+  font-family:Arial,sans-serif;
+}
+.story-tools{margin:20px 0}
 .story-button{
   width:100%;
   text-align:left;
@@ -86,9 +100,71 @@ button:hover{background:var(--deep)}
   border:1px solid #e8e2d2;
 }
 .story-page h2{font-size:25px}
+.story-page h3{color:var(--green)}
 .hidden{display:none}
 .back{margin-bottom:20px}
 .small{font-size:13px;color:#777}
+.notice{
+  background:#edf3ed;
+  border-left:4px solid var(--gold);
+  padding:15px;
+  border-radius:8px;
+  font-size:14px;
+  margin:15px 0;
+}
+.quran-reader{margin-top:45px}
+.quran-controls{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin:20px 0;
+}
+.quran-info{
+  background:#edf3ed;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+}
+.ayah{
+  background:white;
+  border:1px solid #e8e2d2;
+  border-radius:12px;
+  padding:20px;
+  margin:14px 0;
+}
+.ayah-number{
+  color:var(--gold);
+  font-size:13px;
+  font-weight:bold;
+}
+.arabic{
+  font-size:27px;
+  line-height:2.1;
+  text-align:right;
+  direction:rtl;
+  color:var(--deep);
+  margin:15px 0;
+}
+.translation{
+  font-family:Arial,sans-serif;
+  font-size:15px;
+  line-height:1.8;
+}
+.quran-loading{
+  text-align:center;
+  padding:20px;
+  color:var(--green);
+}
+.audio-link{
+  display:inline-block;
+  margin-top:12px;
+  padding:11px 15px;
+  border-radius:8px;
+  background:var(--green);
+  color:white;
+  text-decoration:none;
+}
+.audio-link:hover{background:var(--deep)}
 footer{
   background:var(--deep);
   color:#eee;
@@ -97,97 +173,217 @@ footer{
   margin-top:40px;
 }
 a{color:var(--green)}
+footer a{color:#e5d9b9}
+@media(max-width:480px){
+  header h1{font-size:27px}
+  .arabic{font-size:24px}
+  .story-page{padding:18px}
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>Umma Reminder</h1>
-<p>Learn. Reflect. Remember Allah.</p>
+  <h1>Umma Reminder</h1>
+  <p>Learn. Reflect. Remember Allah.</p>
 </header>
 
 <nav>
-<a href="#home">Home</a>
-<a href="#quran">Quran</a>
-<a href="#hadith">Hadith</a>
-<a href="#stories">Prophets</a>
-<a href="#duas">Duas</a>
-<a href="#learning">Learning</a>
-<a href="#videos">Videos</a>
-<a href="#reminders">Reminders</a>
+  <a href="#home">Home</a>
+  <a href="#quran">Quran</a>
+  <a href="#hadith">Hadith</a>
+  <a href="#stories">Prophets</a>
+  <a href="#duas">Duas</a>
+  <a href="#learning">Learning</a>
+  <a href="#videos">Videos</a>
+  <a href="#reminders">Reminders</a>
 </nav>
 
 <main id="home">
+
 <section class="intro">
-<h2>Welcome to Umma Reminder</h2>
-<p>A peaceful place to learn about Islam, read beneficial knowledge and strengthen our relationship with Allah.</p>
+  <h2>Welcome to Umma Reminder</h2>
+  <p>A peaceful place to learn about Islam, read beneficial knowledge and strengthen our relationship with Allah.</p>
 </section>
 
 <h2>Explore Our Library</h2>
+
 <div class="grid">
-<div class="card" id="quran">
-<h3>📖 The Holy Quran</h3>
-<p>Read the words of Allah and explore their meanings.</p>
-<a href="#quran">Explore Quran</a>
+
+  <div class="card">
+    <h3>📖 The Holy Quran</h3>
+    <p>Read the words of Allah and explore their meanings.</p>
+    <a href="#quran">Explore Quran</a>
+  </div>
+
+  <div class="card" id="hadith">
+    <h3>📜 Hadith</h3>
+    <p>Learn from the authentic teachings of Prophet Muhammad ﷺ.</p>
+    <a href="#hadith">Explore Hadith</a>
+  </div>
+
+  <div class="card">
+    <h3>🌿 Stories of the 25 Prophets</h3>
+    <p>Discover the stories of Allah's Prophets in simple, easy-to-understand language.</p>
+    <a href="#stories">Explore the stories</a>
+  </div>
+
+  <div class="card" id="duas">
+    <h3>🤲 Duas and Adhkar</h3>
+    <p>Discover supplications and remembrance of Allah for everyday life.</p>
+    <a href="#duas">Explore Duas</a>
+  </div>
+
+  <div class="card" id="learning">
+    <h3>🎓 Islamic Learning</h3>
+    <p>Learn the foundations of Islam, step by step.</p>
+    <a href="#learning">Start learning</a>
+  </div>
+
+  <div class="card" id="videos">
+    <h3>🎧 Video and Audio Library</h3>
+    <p>Watch and listen to beneficial Islamic content.</p>
+    <a href="#videos">Explore media</a>
+  </div>
+
+  <div class="card" id="reminders">
+    <h3>🌙 Daily Reminders</h3>
+    <p>Short reminders to help you remember Allah throughout your day.</p>
+    <a href="#reminders">Read reminders</a>
+  </div>
+
 </div>
 
-<div class="card" id="hadith">
-<h3>📜 Hadith</h3>
-<p>Learn from the authentic teachings of Prophet Muhammad ﷺ.</p>
-<a href="#hadith">Explore Hadith</a>
-</div>
 
-<div class="card">
-<h3>🌿 Stories of the 25 Prophets</h3>
-<p>Discover the stories of Allah's Prophets in simple, easy-to-understand language.</p>
-<a href="#stories">Explore the stories</a>
-</div>
+<!-- QURAN SECTION -->
 
-<div class="card" id="duas">
-<h3>🤲 Duas and Adhkar</h3>
-<p>Discover supplications and remembrance of Allah for everyday life.</p>
-<a href="#duas">Explore Duas</a>
-</div>
+<section id="quran" class="quran-reader">
 
-<div class="card" id="learning">
-<h3>🎓 Islamic Learning</h3>
-<p>Learn the foundations of Islam, step by step.</p>
-<a href="#learning">Start learning</a>
-</div>
+  <h2>The Holy Quran</h2>
 
-<div class="card" id="videos">
-<h3>🎧 Video and Audio Library</h3>
-<p>Watch and listen to beneficial Islamic content.</p>
-<a href="#videos">Explore media</a>
-</div>
+  <p>Read the Quran in its original Arabic alongside its English meaning.</p>
 
-<div class="card" id="reminders">
-<h3>🌙 Daily Reminders</h3>
-<p>Short reminders to help you remember Allah throughout your day.</p>
-<a href="#reminders">Read reminders</a>
-</div>
-</div>
+  <div class="notice">
+    The Arabic text is presented in the Uthmani script.
+    The English text is a translation of the meanings of the Quran.
+  </div>
+
+  <div class="quran-controls">
+
+    <label for="surah-select"><strong>Choose a Surah</strong></label>
+
+    <select id="surah-select">
+      <option value="">Loading Surahs...</option>
+    </select>
+
+    <label for="ayah-search"><strong>Search within the selected Surah</strong></label>
+
+    <input
+      type="search"
+      id="ayah-search"
+      placeholder="Search Arabic or English words..."
+    />
+
+  </div>
+
+  <div class="quran-info">
+    <strong id="surah-heading">The Holy Quran</strong>
+    <p id="surah-description">Choose a Surah to begin reading.</p>
+  </div>
+
+  <div id="quran-status" class="quran-loading">
+    Loading the Quran...
+  </div>
+
+  <div id="ayah-list"></div>
+
+  <div class="card">
+    <h3>🎧 Quran Recitation</h3>
+    <p>
+      Listen to Sheikh Maher Al-Muaiqly's recitation
+      in the Hafs narration through the official
+      King Fahd Glorious Quran Printing Complex.
+    </p>
+
+    <a
+      class="audio-link"
+      href="https://qurancomplex.gov.sa/quran-audio-hafs-muaiqly/"
+      target="_blank"
+      rel="noopener"
+    >
+      Listen to Sheikh Maher Al-Muaiqly
+    </a>
+
+    <p class="small">
+      The official library provides access to the recitation
+      of all 114 Surahs.
+    </p>
+  </div>
+
+  <p class="small">
+    Arabic Quran text: AlQuran Cloud, Uthmani edition.
+    English translation: Rowwad Translation Center, QuranEnc.
+    Please refer to the original sources for the complete text and translation details.
+  </p>
+
+</section>
+
+
+<!-- PROPHETS SECTION -->
 
 <section id="stories" style="margin-top:45px">
-<h2>Stories of the 25 Prophets</h2>
-<p>Every Prophet had a message and a lesson for humanity. Choose a name below to begin reading.</p>
 
-<div id="prophet-list" class="grid"></div>
+  <h2>Stories of the 25 Prophets</h2>
 
-<div id="story-detail" class="story-page hidden" style="margin-top:20px">
-<button class="back" onclick="showProphets()">← Back to all Prophets</button>
-<div id="story-content"></div>
-</div>
+  <p>
+    Every Prophet had a message and a lesson for humanity.
+    Choose a name below to begin reading.
+  </p>
+
+  <div class="notice">
+    <strong>A note about this section</strong>
+    <p>
+      Out of respect for the Prophets, this library does not
+      display human images, drawings, faces or visual
+      representations of any Prophet. Their stories are
+      presented through words and Quran references.
+    </p>
+  </div>
+
+  <p id="prophet-count" class="small">25 Prophets</p>
+
+  <div class="story-tools">
+    <label for="prophet-search"><strong>Find a Prophet</strong></label>
+    <input
+      id="prophet-search"
+      type="search"
+      placeholder="Search by name..."
+    />
+  </div>
+
+  <div id="prophet-list" class="grid"></div>
+
+  <div id="story-detail" class="story-page hidden" style="margin-top:20px">
+    <button class="back" onclick="showProphets()">← Back to all Prophets</button>
+    <div id="story-content"></div>
+  </div>
+
 </section>
+
 </main>
 
 <footer>
-<strong>Umma Reminder</strong>
-<p>May Allah make this a source of beneficial knowledge.</p>
-<p class="small">Built with the hope of spreading goodness.</p>
+  <strong>Umma Reminder</strong>
+  <p>May Allah make this a source of beneficial knowledge.</p>
+  <p class="small">Built with the hope of spreading goodness.</p>
 </footer>
 
+
 <script>
+
+// THE 25 PROPHETS
+
 const prophets = [
 {
 name:"Adam (AS)",
@@ -341,38 +537,268 @@ lesson:"Follow his example of mercy, honesty, patience and worship of Allah."
 }
 ];
 
+
+// PROPHET LIST AND SEARCH
+
 const list = document.getElementById("prophet-list");
 const detail = document.getElementById("story-detail");
+const searchProphets = document.getElementById("prophet-search");
 
-prophets.forEach((prophet,index)=>{
-  const button=document.createElement("button");
-  button.className="story-button";
-  button.textContent=(index+1)+". "+prophet.name+"  →";
-  button.onclick=()=>showStory(index);
-  list.appendChild(button);
-});
+function renderProphets(query = "") {
+  list.innerHTML = "";
 
-function showStory(index){
-  const p=prophets[index];
+  const term = query.trim().toLowerCase();
+
+  const matches = prophets
+    .map((prophet,index) => ({prophet,index}))
+    .filter(item => item.prophet.name.toLowerCase().includes(term));
+
+  document.getElementById("prophet-count").textContent =
+    matches.length + " of 25 Prophets";
+
+  if (matches.length === 0) {
+    const message = document.createElement("p");
+    message.textContent = "No Prophet found with that name.";
+    list.appendChild(message);
+    return;
+  }
+
+  matches.forEach(item => {
+    const button = document.createElement("button");
+    button.className = "story-button";
+    button.textContent =
+      (item.index + 1) + ". " + item.prophet.name + " →";
+
+    button.onclick = () => showStory(item.index);
+    list.appendChild(button);
+  });
+}
+
+function showStory(index) {
+  const p = prophets[index];
+
   list.classList.add("hidden");
+  document.querySelector(".story-tools").classList.add("hidden");
+  document.getElementById("prophet-count").classList.add("hidden");
   detail.classList.remove("hidden");
-  document.getElementById("story-content").innerHTML=`
-    <h2>${p.name}</h2>
-    <p>${p.text}</p>
-    <h3>What can we learn?</h3>
-    <p>${p.lesson}</p>
-    <h3>Read in the Quran</h3>
-    <p>${p.refs}</p>
-    <p class="small">These are brief introductions based on Quranic accounts. More detailed stories should be prepared with careful reference to reliable Tafsir and authentic Hadith.</p>
-  `;
+
+  const content = document.getElementById("story-content");
+  content.innerHTML = "";
+
+  const heading = document.createElement("h2");
+  heading.textContent = p.name;
+
+  const story = document.createElement("p");
+  story.textContent = p.text;
+
+  const lessonHeading = document.createElement("h3");
+  lessonHeading.textContent = "What can we learn?";
+
+  const lesson = document.createElement("p");
+  lesson.textContent = p.lesson;
+
+  const referenceHeading = document.createElement("h3");
+  referenceHeading.textContent = "Read in the Quran";
+
+  const references = document.createElement("p");
+  references.textContent = p.refs;
+
+  const note = document.createElement("p");
+  note.className = "small";
+  note.textContent =
+    "These are brief introductions based on Quranic accounts. " +
+    "More detailed stories should be prepared with careful reference " +
+    "to reliable Tafsir and authentic Hadith.";
+
+  content.append(
+    heading,
+    story,
+    lessonHeading,
+    lesson,
+    referenceHeading,
+    references,
+    note
+  );
+
   detail.scrollIntoView({behavior:"smooth"});
 }
 
-function showProphets(){
+function showProphets() {
   detail.classList.add("hidden");
   list.classList.remove("hidden");
-  document.getElementById("stories").scrollIntoView({behavior:"smooth"});
+  document.querySelector(".story-tools").classList.remove("hidden");
+  document.getElementById("prophet-count").classList.remove("hidden");
+
+  renderProphets(searchProphets.value);
+
+  document.getElementById("stories").scrollIntoView({
+    behavior:"smooth"
+  });
 }
+
+searchProphets.addEventListener("input", function() {
+  renderProphets(this.value);
+});
+
+renderProphets();
+
+
+// QURAN READER
+
+const surahSelect = document.getElementById("surah-select");
+const ayahSearch = document.getElementById("ayah-search");
+const ayahList = document.getElementById("ayah-list");
+const quranStatus = document.getElementById("quran-status");
+const surahHeading = document.getElementById("surah-heading");
+const surahDescription = document.getElementById("surah-description");
+
+let currentAyahs = [];
+
+async function loadSurahList() {
+  try {
+    const response = await fetch(
+      "https://api.alquran.cloud/v1/surah"
+    );
+
+    if (!response.ok) throw new Error("Surah list unavailable");
+
+    const result = await response.json();
+
+    surahSelect.innerHTML =
+      '<option value="">Choose a Surah</option>';
+
+    result.data.forEach(surah => {
+      const option = document.createElement("option");
+      option.value = surah.number;
+      option.textContent =
+        surah.number + ". " + surah.englishName +
+        " (" + surah.name + ")";
+
+      surahSelect.appendChild(option);
+    });
+
+    quranStatus.textContent =
+      "Choose any of the 114 Surahs to start reading.";
+
+  } catch (error) {
+    quranStatus.textContent =
+      "We could not load the Surah list. Please check your internet connection and refresh the page.";
+  }
+}
+
+async function loadSurah(number) {
+  if (!number) return;
+
+  quranStatus.textContent = "Loading Surah...";
+  ayahList.innerHTML = "";
+  ayahSearch.value = "";
+  currentAyahs = [];
+
+  try {
+    const [arabicResponse, englishResponse] = await Promise.all([
+      fetch(
+        `https://api.alquran.cloud/v1/surah/${number}/quran-uthmani`
+      ),
+      fetch(
+        `https://quranenc.com/api/v1/translation/sura/english_rwwad/${number}`
+      )
+    ]);
+
+    if (!arabicResponse.ok || !englishResponse.ok) {
+      throw new Error("Unable to load Quran text");
+    }
+
+    const arabicData = await arabicResponse.json();
+    const englishData = await englishResponse.json();
+
+    const surah = arabicData.data;
+
+    // QuranEnc provides a result array. This also accepts
+    // an array response if the API response format differs.
+    const translations = Array.isArray(englishData)
+      ? englishData
+      : (englishData.result || []);
+
+    const translationByAyah = new Map(
+      translations.map(item => [
+        Number(item.aya),
+        item.translation
+      ])
+    );
+
+    currentAyahs = surah.ayahs.map(ayah => ({
+      number: ayah.numberInSurah,
+      arabic: ayah.text,
+      english:
+        translationByAyah.get(ayah.numberInSurah) ||
+        "Translation unavailable."
+    }));
+
+    surahHeading.textContent =
+      surah.englishName + " — " + surah.name;
+
+    surahDescription.textContent =
+      surah.englishNameTranslation +
+      " | " + surah.numberOfAyahs + " verses";
+
+    quranStatus.textContent = "";
+    displayAyahs(currentAyahs);
+
+  } catch (error) {
+    quranStatus.textContent =
+      "The Quran could not be loaded. Please check your internet connection and try again.";
+  }
+}
+
+function displayAyahs(ayahs) {
+  ayahList.innerHTML = "";
+
+  if (ayahs.length === 0) {
+    quranStatus.textContent = "No matching verses found.";
+    return;
+  }
+
+  quranStatus.textContent = "";
+
+  ayahs.forEach(ayah => {
+    const card = document.createElement("div");
+    card.className = "ayah";
+
+    const number = document.createElement("div");
+    number.className = "ayah-number";
+    number.textContent = "Verse " + ayah.number;
+
+    const arabic = document.createElement("div");
+    arabic.className = "arabic";
+    arabic.textContent = ayah.arabic;
+
+    const english = document.createElement("p");
+    english.className = "translation";
+    english.textContent = ayah.english;
+
+    card.append(number, arabic, english);
+    ayahList.appendChild(card);
+  });
+}
+
+surahSelect.addEventListener("change", function() {
+  loadSurah(this.value);
+});
+
+ayahSearch.addEventListener("input", function() {
+  const search = this.value.trim().toLowerCase();
+
+  const filtered = currentAyahs.filter(ayah =>
+    ayah.arabic.includes(search) ||
+    ayah.english.toLowerCase().includes(search)
+  );
+
+  displayAyahs(filtered);
+});
+
+loadSurahList();
+
 </script>
+
 </body>
 </html>
