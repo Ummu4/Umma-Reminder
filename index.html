@@ -60,13 +60,93 @@ async function openSurah(n){app.innerHTML=`<div class="page"><button class="back
 showPage('home');
 </script>
 <!-- QURAN AUDIO PLAYER -->
-<section class="audio-section">
-  <h2>Listen to the Holy Quran</h2>
-  <p>Surah Al-Fatihah</p>
-  <audio controls preload="none">
-    <source src="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3" type="audio/mpeg">
-    Your browser does not support audio playback.
-  </audio>
+<section class="audio-section" style="padding:20px; margin:20px 0; background:#faf8f0; border-radius:12px;">
+  <h2 style="color:#145b43;">Listen to the Holy Quran</h2>
+  <p>Recitation by Sheikh Maher Al-Muaiqly (Hafs)</p>
+
+  <p id="maher-status">Loading surahs and audio, please wait...</p>
+
+  <div id="maher-surah-list" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:10px; max-height:350px; overflow-y:auto;">
+  </div>
+
+  <p id="maher-now-playing">Choose a surah to listen.</p>
+
+  <audio id="maher-audio" controls preload="none" style="width:100%;"></audio>
+
+  <script>
+  (async function () {
+    const status = document.getElementById("maher-status");
+    const list = document.getElementById("maher-surah-list");
+    const audio = document.getElementById("maher-audio");
+    const nowPlaying = document.getElementById("maher-now-playing");
+
+    try {
+      const [reciterResponse, surahResponse] = await Promise.all([
+        fetch("https://mp3quran.net/api/v3/reciters?language=eng"),
+        fetch("https://mp3quran.net/api/v3/suwar?language=eng")
+      ]);
+
+      if (!reciterResponse.ok || !surahResponse.ok) {
+        throw new Error("Could not connect to the Quran audio service.");
+      }
+
+      const reciterData = await reciterResponse.json();
+      const surahData = await surahResponse.json();
+
+      const reciter = reciterData.reciters.find(r =>
+        /maher|muaiqly|معيقلي|ماهر/i.test(r.name)
+      );
+
+      if (!reciter) {
+        throw new Error("Sheikh Maher Al-Muaiqly was not found.");
+      }
+
+      const moshaf = reciter.moshaf.find(m =>
+        /hafs|حفص/i.test(m.name) &&
+        (Number(m.surah_total) === 114 ||
+        (m.surah_list && m.surah_list.split(",").length >= 114))
+      );
+
+      if (!moshaf) {
+        throw new Error("The complete Hafs recitation could not be found.");
+      }
+
+      const server = moshaf.server.endsWith("/")
+        ? moshaf.server
+        : moshaf.server + "/";
+
+      const surahs = surahData.suwar;
+
+      if (!surahs || surahs.length !== 114) {
+        throw new Error("The complete surah list could not be loaded.");
+      }
+
+      surahs.forEach(surah => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "▶ " + surah.id + ". " + surah.name;
+        button.style.cssText =
+          "padding:12px; border:0; border-radius:8px; background:#145b43; color:white; cursor:pointer;";
+
+        button.addEventListener("click", () => {
+          const number = String(surah.id).padStart(3, "0");
+          audio.src = server + number + ".mp3";
+          nowPlaying.textContent = "Now playing: " + surah.name;
+          audio.load();
+          audio.play().catch(() => {
+            status.textContent = "Press play on the audio player to begin.";
+          });
+        });
+
+        list.appendChild(button);
+      });
+
+      status.textContent = "All 114 surahs are ready. Choose any surah below.";
+    } catch (error) {
+      status.textContent = "Audio could not load: " + error.message;
+    }
+  })();
+  </script>
 </section>
 </body>
 </html>
