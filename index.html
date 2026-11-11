@@ -58,4 +58,15 @@ async function loadSurahs(){const status=document.getElementById('sstatus');try{
 function drawSurahs(){const q=(document.getElementById('ssearch')?.value||'').toLowerCase(),el=document.getElementById('slist');if(!el)return;el.innerHTML=surahs.filter(s=>String(s.number).includes(q)||s.englishName.toLowerCase().includes(q)||s.name.includes(q)).map(s=>`<button class="surah" onclick="openSurah(${s.number})"><span><strong>${s.number}. ${s.englishName}</strong><br><span class="meta">${s.englishNameTranslation} · ${s.numberOfAyahs} verses</span></span><span class="arabic">${s.name}</span></button>`).join('')}
 async function openSurah(n){app.innerHTML=`<div class="page"><button class="back" onclick="renderQuran()">← All surahs</button><div id="reader"><p class="small">Loading surah…</p></div></div>`;window.scrollTo(0,0);const box=document.getElementById('reader');try{const [a,b]=await Promise.all([fetch(`https://api.alquran.cloud/v1/surah/${n}/quran-uthmani`),fetch(`https://quranenc.com/api/v1/translation/sura/english_rwwad/${n}`)]);if(!a.ok||!b.ok)throw Error();const ar=await a.json(),en=await b.json(),verses=ar.data?.ayahs||[],trans=en.result||en.data||[],map=new Map(trans.map(x=>[Number(x.aya),x.translation||x.aya_text||'']));box.innerHTML=`<p class="eyebrow">Qur’an · Surah ${n}</p><h2>${ar.data?.englishName||'Surah '+n}</h2><p>${ar.data?.englishNameTranslation||''} · ${verses.length} verses</p><div class="notice">This reader displays text and English meaning. To listen to Sheikh Maher Al-Muaiqly, open the official recitation library below.</div><p><a href="https://qurancomplex.gov.sa/quran-audio-hafs-muaiqly/" target="_blank" rel="noopener">Listen at the official recitation library ↗</a></p>${verses.map(v=>`<div class="verse"><p class="arabic">${v.text} <span style="color:#a88742;font-size:16px">۞ ${v.numberInSurah}</span></p><p class="translation">${(map.get(v.numberInSurah)||'English meaning unavailable for this verse from the selected source.').replace(/[\[(]\d+[\])]/g,'').trim()||'English meaning unavailable for this verse from the selected source.'}</p></div>`).join('')}`}catch(e){box.innerHTML='<p>We could not load this surah right now. Check your internet connection and try again.</p>'}}
 showPage('home');
-</script></body></html>
+</script>
+<!-- QURAN AUDIO PLAYER -->
+<section class="audio-section">
+  <h2>Listen to the Holy Quran</h2>
+  <p>Surah Al-Fatihah</p>
+  <audio controls preload="none">
+    <source src="https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/1.mp3" type="audio/mpeg">
+    Your browser does not support audio playback.
+  </audio>
+</section>
+</body>
+</html>
