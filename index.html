@@ -50,7 +50,98 @@ media:`<div class="page"><p class="eyebrow">Listen & reflect</p><h2>Videos & Aud
 function setActive(name){document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name))}function showPage(name){setActive(name);if(name==='prophets')renderProphets();else if(name==='quran')renderQuran();else if(name==='hadith')renderHadith();else if(name==='duas')renderDuas();else if(name==='reminders')renderReminders();else app.innerHTML=pages[name]||pages.home;window.scrollTo(0,0)}document.querySelectorAll('#nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 function renderProphets(){app.innerHTML=`<div class="page"><p class="eyebrow">Stories from the Qur’an</p><h2>The 25 Prophets</h2><p class="lead">Choose a Prophet to open a peaceful reading page with a symbolic illustration, their story, lessons and Qur’an references. The Prophets themselves are never depicted.</p><div class="tools"><input id="psearch" placeholder="Search a prophet by name…"></div><div class="list" id="plist"></div></div>`;const draw=q=>{document.getElementById('plist').innerHTML=prophets.filter(p=>p[0].toLowerCase().includes(q.toLowerCase())).map((p,i)=>{let n=prophets.indexOf(p);return `<button class="prophet-choice" onclick="openStory(${n})">${prophetArt[p[0]]?`<img class="prophet-thumb" src="${prophetArt[p[0]].src}" alt="${prophetArt[p[0]].alt}" loading="lazy">`:``}<span class="number">${String(n+1).padStart(2,'0')}</span><span class="prophet-card-copy"><strong>${p[0]}</strong><br><span class="meta">${p[1]}</span></span></button>`}).join('')};draw('');document.getElementById('psearch').addEventListener('input',e=>draw(e.target.value))}
 function openStory(i){const p=prophets[i];app.innerHTML=`<div class="page"><button class="back" onclick="renderProphets()">← All prophets</button><p class="eyebrow">Prophet ${i+1} of 25</p><article class="article">${prophetArt[p[0]]?`<figure class="story-art"><img src="${prophetArt[p[0]].src}" alt="${prophetArt[p[0]].alt}" loading="eager"><figcaption>Symbolic illustration inspired by the story setting. It is not a depiction of the Prophet.</figcaption></figure>`:''}<h2>${p[0]} ${i===24?'ﷺ':'عليه السلام'}</h2><p><strong>${p[1]}</strong></p><p>${p[2]}</p>${p[3].map(s=>`<h3>${s[0]}</h3><p>${s[1]}</p>`).join('')}<div class="reference"><strong>Qur’an references</strong><br>${p[4]}</div><div class="lesson"><h3>What we learn</h3><ul>${p[5].map(x=>`<li>${x}</li>`).join('')}</ul></div><p class="small">These are concise learning summaries based on Qur’anic passages. Where the Qur’an gives limited detail, this page avoids presenting popular but unverified details as established fact. Please consult reliable tafsir for deeper study.</p></article></div>`;window.scrollTo(0,0)}
-function renderHadith(){app.innerHTML=`<div class="page"><p class="eyebrow">The Prophetic Sunnah</p><h2>Hadith Collection</h2><p class="lead">Selected narrations with collection references. Translations are brief renderings; consult the original Arabic and scholarly explanations for detailed study.</p><div class="tools"><input id="hsearch" placeholder="Search hadith topics…"></div><div id="hlist"></div></div>`;const draw=q=>document.getElementById('hlist').innerHTML=hadith.filter(h=>(h.join(' ')).toLowerCase().includes(q.toLowerCase())).map(h=>`<article class="card" style="margin:12px 0"><h3>${h[0]}</h3><p>${h[1]}</p><div class="reference">${h[2]} · ${h[3]}</div></article>`).join('');draw('');document.getElementById('hsearch').addEventListener('input',e=>draw(e.target.value))}
+function renderHadith(){
+const hadiths = [
+{
+title:"Actions Are Judged by Intentions",
+arabic:"إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+english:"Actions are judged by intentions, and every person will have what they intended.",
+reference:"Sahih al-Bukhari 1; Sahih Muslim 1907",
+lesson:"Always renew your intention and seek the pleasure of Allah."
+},
+{
+title:"Love for Your Brother",
+arabic:"لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+english:"None of you truly believes until he loves for his brother what he loves for himself.",
+reference:"Sahih al-Bukhari 13; Sahih Muslim 45",
+lesson:"Wish goodness for others just as you wish it for yourself."
+},
+{
+title:"Speak Good or Remain Silent",
+arabic:"فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
+english:"Whoever believes in Allah and the Last Day should speak good or remain silent.",
+reference:"Sahih al-Bukhari 6018; Sahih Muslim 47",
+lesson:"Guard your tongue and avoid words that hurt others."
+},
+{
+title:"Make Things Easy",
+arabic:"يَسِّرُوا وَلَا تُعَسِّرُوا، وَبَشِّرُوا وَلَا تُنَفِّرُوا",
+english:"Make things easy and do not make them difficult. Give glad tidings and do not drive people away.",
+reference:"Sahih al-Bukhari 69; Sahih Muslim 1734",
+lesson:"Show kindness and gentleness when dealing with people."
+},
+{
+title:"Purification",
+arabic:"الطُّهُورُ شَطْرُ الْإِيمَانِ",
+english:"Purification is half of faith.",
+reference:"Sahih Muslim 223",
+lesson:"Keep yourself clean and maintain purity in worship and daily life."
+},
+{
+title:"Allah Looks at the Heart",
+arabic:"إِنَّ اللَّهَ لَا يَنْظُرُ إِلَى صُوَرِكُمْ وَأَمْوَالِكُمْ، وَلَكِنْ يَنْظُرُ إِلَى قُلُوبِكُمْ وَأَعْمَالِكُمْ",
+english:"Allah does not look at your appearance or wealth, but He looks at your hearts and deeds.",
+reference:"Sahih Muslim 2564",
+lesson:"Give importance to sincerity, good character and righteous actions."
+},
+{
+title:"The Path of Knowledge",
+arabic:"وَمَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ",
+english:"Whoever follows a path seeking knowledge, Allah will make easy for him a path to Paradise.",
+reference:"Sahih Muslim 2699",
+lesson:"Seek beneficial knowledge and use it to improve your life and worship."
+},
+{
+title:"Mercy to Others",
+arabic:"مَنْ لَا يَرْحَمُ لَا يُرْحَمُ",
+english:"Whoever does not show mercy will not be shown mercy.",
+reference:"Sahih al-Bukhari 5997; Sahih Muslim 2318",
+lesson:"Show compassion to children, elders, animals and all creation."
+}
+];
+
+app.innerHTML = `
+<div class="page">
+<button class="back" onclick="showPage('home')">← Back to Home</button>
+<p class="eyebrow">The Prophetic Sunnah</p>
+<h2>Hadith Collection</h2>
+<p class="lead">Discover authentic teachings of Prophet Muhammad ﷺ. Read, reflect and put these beautiful teachings into practice.</p>
+
+<div class="notice">
+<strong>A reminder</strong>
+<p>These narrations are selected from Sahih al-Bukhari and Sahih Muslim. English translations are brief renderings of their meanings.</p>
+</div>
+
+<div class="hadith-list">
+${hadiths.map((h,i) => `
+<article class="card hadith-card">
+<p class="eyebrow">Hadith ${i+1} of ${hadiths.length}</p>
+<h3>${h.title}</h3>
+<p dir="rtl" lang="ar" style="font-size:25px;line-height:2.1;text-align:right;margin:20px 0;color:var(--green);font-family:serif;">${h.arabic}</p>
+<h4>English Meaning</h4>
+<p>${h.english}</p>
+<p><strong>Reference:</strong> ${h.reference}</p>
+<div class="notice">
+<strong>Lesson to remember</strong>
+<p>${h.lesson}</p>
+</div>
+</article>
+`).join('')}
+</div>
+<p class="small">May Allah grant us beneficial knowledge and the ability to follow the Sunnah. Ameen.</p>
+</div>
+`;
+}
 function renderDuas(){app.innerHTML=`<div class="page"><p class="eyebrow">Supplication & remembrance</p><h2>Words & Adhkar</h2><p class="lead">A selection of Qur’anic duas. Read them with reflection and learn their meanings.</p>${duas.map(d=>`<article class="dua"><h3>${d[0]}</h3><p class="arabic">${d[1]}</p><p>${d[2]}</p><div class="reference">${d[3]}</div></article>`).join('')}<div class="notice">For morning and evening adhkar, use a trusted authenticated collection and check the wording and references. More adhkar can be added in a reviewed update.</div></div>`}
 function renderReminders(){app.innerHTML=`<div class="page"><p class="eyebrow">Pause for a moment</p><h2>Daily Reminders</h2><p class="lead">A few Qur’anic reminders to revisit. You can return to this page whenever you need a moment of reflection.</p><div id="rlist">${reminders.map(r=>`<article class="dua"><h3>${r[0]}</h3><p class="arabic">${r[1]}</p><p>${r[2]}</p><div class="reference">${r[3]}</div></article>`).join('')}</div></div>`}
 let surahs=[];function renderQuran(){app.innerHTML=`<div class="page"><p class="eyebrow">The final revelation</p><h2>The Holy Qur’an</h2><p class="lead">Browse all 114 surahs. Open a surah to read Arabic Uthmani text and an English meaning.</p><div class="tools"><input id="ssearch" placeholder="Search surah by name or number…"></div><p id="sstatus" class="small">Loading surah list…</p><div id="slist"></div><div class="notice">Arabic text: AlQuran Cloud, Uthmani script. English meaning: QuranEnc — English Rowwad translation. Recitation: Sheikh Maher Al-Muaiqly via the official King Fahd Complex library. Audio is linked, not embedded, in this version.</div><a href="https://qurancomplex.gov.sa/quran-audio-hafs-muaiqly/" target="_blank" rel="noopener">Open official Maher Al-Muaiqly recitation library ↗</a></div>`;loadSurahs()}
