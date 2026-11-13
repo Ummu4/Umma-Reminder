@@ -169,7 +169,39 @@ const duas = [
   }
 ];
   function renderDuas(){app.innerHTML=`<div class="page"><p class="eyebrow">Supplication & remembrance</p><h2>Words & Adhkar</h2><p class="lead">A selection of Qur’anic duas. Read them with reflection and learn their meanings.</p>${duas.map(d=>`<article class="dua"><h3>${d[0]}</h3><p class="arabic">${d[1]}</p><p>${d[2]}</p><div class="reference">${d[3]}</div></article>`).join('')}<div class="notice">For morning and evening adhkar, use a trusted authenticated collection and check the wording and references. More adhkar can be added in a reviewed update.</div></div>`}
+function renderLearning() {
+  const lessons = [
+    {
+      title: "Foundations of Islam",
+      content: "Learn about the five pillars of Islam and the foundation of a Muslim's life."
+    },
+    {
+      title: "Articles of Faith",
+      content: "Learn about the six pillars of Iman and what every Muslim believes."
+    },
+    {
+      title: "Salah and Worship",
+      content: "Learn the importance of prayer, purification and remembering Allah."
+    },
+    {
+      title: "Islamic Manners and Character",
+      content: "Learn about honesty, patience, kindness, forgiveness and good character."
+    }
+  ];
 
+  return `
+    <section class="content-section">
+      <h2>Islamic Learning</h2>
+      <p>Learn the foundations of faith, worship and character.</p>
+      ${lessons.map(lesson => `
+        <div class="reminder-card">
+          <h3>${lesson.title}</h3>
+          <p>${lesson.content}</p>
+        </div>
+      `).join("")}
+    </section>
+  `;
+}
   function renderReminders(){app.innerHTML=`<div class="page"><p class="eyebrow">Pause for a moment</p><h2>Daily Reminders</h2><p class="lead">A few Qur’anic reminders to revisit. You can return to this page whenever you need a moment of reflection.</p><div id="rlist">${reminders.map(r=>`<article class="dua"><h3>${r[0]}</h3><p class="arabic">${r[1]}</p><p>${r[2]}</p><div class="reference">${r[3]}</div></article>`).join('')}</div></div>`}
 let surahs=[];function renderQuran(){app.innerHTML=`<div class="page"><p class="eyebrow">The final revelation</p><h2>The Holy Qur’an</h2><p class="lead">Browse all 114 surahs. Open a surah to read Arabic Uthmani text and an English meaning.</p><div class="tools"><input id="ssearch" placeholder="Search surah by name or number…"></div><p id="sstatus" class="small">Loading surah list…</p><div id="slist"></div><div class="notice">Arabic text: AlQuran Cloud, Uthmani script. English meaning: QuranEnc — English Rowwad translation. Recitation: Sheikh Maher Al-Muaiqly via the official King Fahd Complex library. Audio is linked, not embedded, in this version.</div><a href="https://qurancomplex.gov.sa/quran-audio-hafs-muaiqly/" target="_blank" rel="noopener">Open official Maher Al-Muaiqly recitation library ↗</a></div>`;loadSurahs()}
 async function loadSurahs(){const status=document.getElementById('sstatus');try{const r=await fetch('https://api.alquran.cloud/v1/surah');if(!r.ok)throw Error();const j=await r.json();surahs=j.data||[];status.textContent=surahs.length?`${surahs.length} surahs available`:'No surahs returned.';drawSurahs();document.getElementById('ssearch').addEventListener('input',drawSurahs)}catch(e){status.textContent='Could not load the surah list. Check your internet connection and refresh the page.'}}
