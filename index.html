@@ -374,6 +374,15 @@ showPage('home');
     <p><a href="https://www.youtube.com/results?search_query=Belal+Assaad+remembering+death" target="_blank">4. Remembering the Hereafter</a></p>
     <p><a href="https://www.youtube.com/results?search_query=Belal+Assaad+Allah+mercy+reminder" target="_blank">5. Never Lose Hope in Allah's Mercy</a></p>
   </div>
-</section> 
+</section>
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js")
+        .then(() => console.log("Umma Reminder is ready for offline use."))
+        .catch((error) => console.error("Service worker registration failed:", error));
+    });
+  }
+</script>
 </body>
 </html>
